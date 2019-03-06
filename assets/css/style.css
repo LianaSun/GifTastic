@@ -1,0 +1,34 @@
+.container {
+    width: 100%;
+    max-width: 960px;
+    margin: 10px auto 0 auto;
+    clear: both;
+}
+
+.movieButton {
+    margin-right: 15px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    color: goldenrod;
+    background-color: red;
+}
+
+p {
+    font-family: 'Alfa Slab One', cursive
+}
+
+img{
+    margin-bottom: 10px;
+}
+
+#formDiv {
+    float: right;
+}
+
+#add-movie {
+    margin-top: 10px;
+}
+
+#randomBtn {
+    margin: 20px 0 20px 0;
+}
