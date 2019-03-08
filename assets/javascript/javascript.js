@@ -1,25 +1,27 @@
 var topics = ["Frozen", "Inside Out", "How To Train Your Dragon", "Moana", "Coco", "Finding Nemo", "Lilo and Stitch", "The Lion King", "Peter Rabbit", "The Incredibles"]
 
-$(document).readyState(function() {
+$(document).ready(function() {
     function displayMovieGif() {
 
         var movie = $(this).attr("data-name");
-        var queryURL = var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movie + "&api_key=kLPvlVa7eE710WhxcekpwiEvuY3MMS9P&limit=10";
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movie + "&api_key=kLPvlVa7eE710WhxcekpwiEvuY3MMS9P&limit=10";
+    
         
         $.ajax ({
             url: queryURL,
             method: "GET"
         }).then(function(response) {
 
-            $(#displayGifs).empty();
+            $("#displayGifs").empty();
 
             var results = response.data
+            console.log(response)
 
-            for (var i = 0; i < results.length; i++)
+            for (var i = 0; i < results.length; i++) {
 
-            var movieDiv = $("<div class= 'movie'>");
+            var movieDiv = $("<div class='movie'>");
 
-            var rating = results [i].results;
+            var rating = results[i].results;
 
             var title = results[i].title;
 
@@ -29,7 +31,7 @@ $(document).readyState(function() {
 
             var giphyImage = $("<img>").attr("class", "gifImage").attr("data-state" , "still")
 
-            giphyImage.attr("src", results[i].images.fixed_height_still.url);
+        giphyImage.attr("src", results[i].images.fixed_height_still.url);
         giphyImage.attr({'data-animate' : results[i].images.fixed_height.url});
         giphyImage.attr({'data-state' : "still"});
         giphyImage.attr({'data-still' : results[i].images.fixed_height_still.url});
@@ -38,12 +40,11 @@ $(document).readyState(function() {
         movieDiv.append(giphyImage);
 
         $("#displayGifs").prepend(movieDiv);
-
-      }
-
+        }
     });
-
   }
+  
+
 
   
   $("#displayGifs").on("click", ".gifImage", function () {
@@ -130,6 +131,5 @@ $(document).readyState(function() {
       
         $("#randomGif").prepend(randomImage);
       });
+    });
   });
-
-});
