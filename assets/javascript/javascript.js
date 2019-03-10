@@ -1,135 +1,106 @@
-var topics = ["Frozen", "Inside Out", "How To Train Your Dragon", "Moana", "Coco", "Finding Nemo", "Lilo and Stitch", "The Lion King", "Peter Rabbit", "The Incredibles"]
-
 $(document).ready(function() {
-    function displayMovieGif() {
 
-        var movie = $(this).attr("data-name");
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movie + "&api_key=kLPvlVa7eE710WhxcekpwiEvuY3MMS9P&limit=10";
-    
+    var topics = ["Moana", "Frozen", "Coco", "How To Train Your Dragon", "Inside Out", "Finding Nemo",]
+     var results;
+     //var giphyURL = "https://api.giphy.com/v1/gifs/trending?api_key=6yxzdI58IBG7adsyR6nW2LUXgOHHahMu";
         
-        $.ajax ({
-            url: queryURL,
-            method: "GET"
-        }).then(function(response) {
-
-            $("#displayGifs").empty();
-
-            var results = response.data
-            console.log(response)
-
-            for (var i = 0; i < results.length; i++) {
-
-            var movieDiv = $("<div class='movie'>");
-
-            var rating = results[i].results;
-
-            var title = results[i].title;
-
-            var pOne = $("<p>").text("Rating:" + rating + "||" + "Title:" + title);
-
-            movieDiv.append(pOne);
-
-            var giphyImage = $("<img>").attr("class", "gifImage").attr("data-state" , "still")
-
-        giphyImage.attr("src", results[i].images.fixed_height_still.url);
-        giphyImage.attr({'data-animate' : results[i].images.fixed_height.url});
-        giphyImage.attr({'data-state' : "still"});
-        giphyImage.attr({'data-still' : results[i].images.fixed_height_still.url});
-
-       
-        movieDiv.append(giphyImage);
-
-        $("#displayGifs").prepend(movieDiv);
-        }
-    });
-  }
-  
-
-
-  
-  $("#displayGifs").on("click", ".gifImage", function () {
-
-    var state = $(this).attr('data-state');
-
-   
-      if (state === "still") {
-        $(this).attr("src", $(this).attr("data-animate"));
-        $(this).attr("data-state", "animate");
-      } else {
-        $(this).attr("src", $(this).attr("data-still"));
-        $(this).attr("data-state", "still");
-      }
-  });
-
-
-  function renderButtons() {
-
-  
-    $("#movieButtonsDiv").empty();
-
-   
-    for (var i = 0; i < topics.length; i++) {
-
-      var a = $("<button>");
-
-     
-      a.addClass("movie-btn");
-
-
-      a.attr("data-name", topics[i]);
-
-   
-      a.text(topics[i]);
-
-     
-      $("#movieButtonsDiv").append(a);
-    }
-  }
-
-  $(document).on("click", ".movie-btn", displayMovieGif);
-
- 
-  renderButtons();
-
-  $("#add-movie").on("click", function(event) {
-    event.preventDefault();
-
- 
-    var newMovie = $("#movie-input").val().trim();
-
-
-    topics.push(newMovie);
-
-    renderButtons();
-  });
-
-
-  $("#randomBtn").on("click", function() {
-
-    $("#randomGif").empty();
-
-  
-    var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=eXssaD9YeTfAYOKoPh2z6l27EN6AsQD5&limit=1";
-
-  
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-    })
-
-      .then(function(response) {
-
-     
-        var imageUrl = response.data.image_original_url;
-
-     
-        var randomImage = $("<img>");
-
-    
-        randomImage.attr("src", imageUrl);
-
-      
-        $("#randomGif").prepend(randomImage);
-      });
-    });
-  });
+            function makeButtons() {
+        
+                $("#movieButton").empty();
+        
+                for (i = 0; i < topics.length; i++) {
+                    
+                    var b = $("<button>");
+        
+                    b.addClass("character-btn");
+                    b.attr("data-name", topics[i]);
+                    b.text(topics[i]);
+        
+                    $("#movieButton").append(b);
+                };
+            };
+        
+            $("#add-movie").on("click", function(event) {
+        
+                event.preventDefault();
+        
+                var character = $("#movieInput").val().trim();
+        
+                topics.push(character);
+                $("#movieInput").val("");
+        
+                makeButtons();
+        
+                console.log(topics); 
+            });
+        
+            makeButtons();
+        
+            //FUNCTION FOR GRABBING GIPHY API CONTENT
+        
+              function dataPull() {
+        
+                 var characterName = $(this).attr("data-name");
+                 var characterStr = characterName.split(" ").join("+");
+                 var giphyURL = "https://api.giphy.com/v1/gifs/search?q=" + movie + "&api_key=dc6zaTOxFJmzC&limit=10";
+        
+                 $.ajax({
+                url: giphyURL,
+                method: "GET"
+              }).done(function(response) {
+                
+                console.log(giphyURL);
+                console.log(response);
+        
+                results = response.data;
+        
+                $("#gifs").empty();
+                for (var i = 0; i < results.length; i++) {
+                    
+                    var characterDiv = $("<div>");
+                    var para = $("<p class='rating'>").text("Rating: " + results[i].rating);
+                    var characterImage = $("<img>");
+        
+                    para.addClass("rating-text")
+                    
+                  characterImage.addClass("image-gifs")
+                    characterImage.attr("src", results[i].images.fixed_height_still.url);
+                    characterImage.attr("data-state", "still");
+                  characterImage.attr("data-position", i);
+        
+                    movieDiv.append(para);
+                    movieDiv.append(movieImage);
+                    movieDiv.addClass("individual-gifs")
+        
+                  $("#gifs").prepend(characterDiv);
+        
+                }; 
+              }); 
+          
+            };
+        
+          // Use document on click function to apply function for elements AFTER the page has loaded
+        
+            $(document).on("click", ".movieButton", dataPull);
+        
+            function gifAnimation() {
+              var state = $(this).attr("data-state");
+              var position = $(this).attr("data-position"); //will return a string
+              position = parseInt(position); //string to integer
+        
+              console.log(results[position].images.fixed_height.url);
+              console.log(position);
+        
+              if (state === "still") {
+                console.log("we're here");
+                $(this).attr("src", results[position].images.fixed_height.url);
+                $(this).attr("data-state", "animate");
+              } else {
+                $(this).attr("src", results[position].images.fixed_height_still.url);
+                $(this).attr("data-state", "still");
+              }
+            };
+        
+          $(document).on("click", ".image-gifs", gifAnimation);
+        
+        });
