@@ -1,8 +1,8 @@
 $(document).ready(function() {
 
     var topics = ["Moana", "Frozen", "Coco", "How To Train Your Dragon", "Inside Out", "Finding Nemo",]
-     var results;
-     //var giphyURL = "https://api.giphy.com/v1/gifs/trending?api_key=6yxzdI58IBG7adsyR6nW2LUXgOHHahMu";
+    var results;
+    var giphyURL = "https://api.giphy.com/v1/gifs/trending?api_key=kLPvlVa7eE710WhxcekpwiEvuY3MMS9P";
         
             function makeButtons() {
         
@@ -12,7 +12,7 @@ $(document).ready(function() {
                     
                     var b = $("<button>");
         
-                    b.addClass("character-btn");
+                    b.addClass("movie-btn");
                     b.attr("data-name", topics[i]);
                     b.text(topics[i]);
         
@@ -26,7 +26,7 @@ $(document).ready(function() {
         
                 var character = $("#movieInput").val().trim();
         
-                topics.push(character);
+                topics.push(movie);
                 $("#movieInput").val("");
         
                 makeButtons();
@@ -40,8 +40,8 @@ $(document).ready(function() {
         
               function dataPull() {
         
-                 var characterName = $(this).attr("data-name");
-                 var characterStr = characterName.split(" ").join("+");
+                 var movieName = $(this).attr("data-name");
+                 var movieStr = movieName.split(" ").join("+");
                  var giphyURL = "https://api.giphy.com/v1/gifs/search?q=" + movie + "&api_key=dc6zaTOxFJmzC&limit=10";
         
                  $.ajax({
@@ -57,22 +57,22 @@ $(document).ready(function() {
                 $("#gifs").empty();
                 for (var i = 0; i < results.length; i++) {
                     
-                    var characterDiv = $("<div>");
+                    var movieDiv = $("<div>");
                     var para = $("<p class='rating'>").text("Rating: " + results[i].rating);
-                    var characterImage = $("<img>");
+                    var movieImage = $("<img>");
         
                     para.addClass("rating-text")
                     
-                  characterImage.addClass("image-gifs")
-                    characterImage.attr("src", results[i].images.fixed_height_still.url);
-                    characterImage.attr("data-state", "still");
-                  characterImage.attr("data-position", i);
+                  movieImage.addClass("image-gifs")
+                    movieImage.attr("src", results[i].images.fixed_height_still.url);
+                    movieImage.attr("data-state", "still");
+                  movieImage.attr("data-position", i);
         
                     movieDiv.append(para);
                     movieDiv.append(movieImage);
                     movieDiv.addClass("individual-gifs")
         
-                  $("#gifs").prepend(characterDiv);
+                  $("#gifs").prepend(movieDiv);
         
                 }; 
               }); 
