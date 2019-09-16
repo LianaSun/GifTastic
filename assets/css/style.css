@@ -3,32 +3,32 @@
     max-width: 960px;
     margin: 10px auto 0 auto;
     clear: both;
-}
-
-.movieButton {
+  }
+  
+  .artist-btn {
     margin-right: 15px;
-    border-radius: 3px;
+    border-radius: 5px;
     margin-bottom: 10px;
-    color: goldenrod;
-    background-color: red;
-}
-
-p {
-    font-family: 'Alfa Slab One', cursive
-}
-
-img{
-    margin-bottom: 10px;
-}
-
-#formDiv {
+    color: white;
+    background-color: black;
+  }
+  
+  p {
+    font-weight: bold;
+  }
+  
+  img {
+     margin-bottom: 10px;
+  }
+  
+  #formDiv {
     float: right;
-}
-
-#add-movie {
+  }
+  
+  #add-artist {
     margin-top: 10px;
-}
-
-#randomBtn {
+  }
+  
+  #randomBtn {
     margin: 20px 0 20px 0;
-}
+  }

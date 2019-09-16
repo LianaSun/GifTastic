@@ -11,7 +11,7 @@ $(document).ready(function(){
   var movie = $(this).attr("data-name");
 
   //API URL to be queried
-  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movie + "kLPvlVa7eE710WhxcekpwiEvuY3MMS9P&limit=10";
+  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movie + "&api_key=eXssaD9YeTfAYOKoPh2z6l27EN6AsQD5&limit=10";
 
   //Create an AJAX call for the specific movie buttonbeing clicked on
   $.ajax({
